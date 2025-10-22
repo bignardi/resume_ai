@@ -1,20 +1,23 @@
-app = "resume-ai"
+# fly.toml app configuration file generated for resume-ai-xod7vw on 2025-10-22T14:08:36Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-[env]
-PORT = "8080"
+app = 'resume-ai-xod7vw'
+primary_region = 'ams'
 
-[experimental]
-allowed_public_ports = [8080]
-auto_rollback = true
+[build]
 
-[[services]]
+[http_service]
   internal_port = 8080
-  protocol = "tcp"
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
 
-  [[services.ports]]
-    port = 80
-    handlers = ["http"]
-
-  [[services.ports]]
-    port = 443
-    handlers = ["tls", "http"]
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 1024
