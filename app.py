@@ -36,7 +36,7 @@ class ChatResponse(BaseModel):
 #--- endpoints ---#
 @app.get("/")
 async def root():
-    return {"message": "Bignardi IA is running!"}
+    return {"message": "Resume AI is running!"}
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
