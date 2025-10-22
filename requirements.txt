@@ -1,0 +1,7 @@
+EXPOSE 8000
+
+fastapi
+uvicorn
+pydantic
+google-generativeai
+python-dotenv
