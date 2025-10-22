@@ -11,7 +11,7 @@ COPY . /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Expõe a porta padrão do Uvicorn
-EXPOSE 8080
+EXPOSE 8000
 
 # Comando para iniciar o servidor FastAPI
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
