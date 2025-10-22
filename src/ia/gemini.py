@@ -7,7 +7,7 @@ class Gemini(BaseIA):
         self.api_key = api_key
         self.system_prompt = system_prompt
         genai.configure(api_key=self.api_key)
-        self.model = genai.GenerativeModel('gemini-2.5-pro')
+        self.model = genai.GenerativeModel('gemini-2.5-flash')
 
     def chat(self, prompt: str) -> str:
         if self.system_prompt:
