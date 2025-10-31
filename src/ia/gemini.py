@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from .base import BaseIA
 
 import google.generativeai as genai
