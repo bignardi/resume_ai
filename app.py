@@ -5,12 +5,29 @@ from fastapi import FastAPI, UploadFile, Form, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from src.ia.gemini import Gemini
+from starlette.middleware.base import BaseHTTPMiddleware
+from datetime import datetime
 
 import os
 import PyPDF2
 
 #--- Inicialização ---#
 app = FastAPI()
+
+#--- Request Log Storage ---#
+request_logs = []
+
+class LoggingMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+        
+        # Registra: timestamp, método, rota e status
+        log_entry = f"{datetime.now().strftime('%H:%M:%S')} - {request.method} {request.url.path} - {response.status_code}"
+        request_logs.append(log_entry)
+        
+        return response
+
+app.add_middleware(LoggingMiddleware)
 
 load_dotenv()  # Carrega as variáveis do .env
 
@@ -85,3 +102,8 @@ async def chat(
         response_text = gemini_chat(prompt_text)
 
     return JSONResponse(content={"response": response_text})
+
+@app.get("/logs")
+async def get_logs():
+    """Retorna todos os logs de requisição da sessão"""
+    return {"total_requests": len(request_logs), "logs": request_logs}
